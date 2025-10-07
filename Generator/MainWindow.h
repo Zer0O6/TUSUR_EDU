@@ -18,5 +18,8 @@ public:
 
 private:
     Ui::MainWindowClass ui;
+
+private slots:
+    void ClickedSlot();
 };
 

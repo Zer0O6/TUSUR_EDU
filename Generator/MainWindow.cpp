@@ -7,14 +7,20 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui.setupUi(this);
 
+    QPushButton* pushButton = new QPushButton();
+    pushButton->setText("Push Button");
+    ui.verticalLayout->addWidget(pushButton);
+    connect(pushButton, &QPushButton::clicked, this, &MainWindow::ClickedSlot);
+
     QLineSeries* series = new QLineSeries();
     float t = 100.0F;
-    float a = 10.0F;
-    float step = 0.25F;
+    float a = 50.0F;
+    float w = 50.0F;
+    Generator gen(a, w, 1, t);
+    float step = gen.getStep();
     float sizeX = t / step;
-    Generator gen(a, 100.0F, 1, t, step);
     float* x = gen.get();
-    for (int i = 0; i < sizeX + 1; i++) {
+    for (int i = 0; i < sizeX; i++) {
         series->append(i*step, x[i]);
     }
 
@@ -27,11 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
     chart->setVisible(true);
 
     QChartView* chartView = new QChartView(chart);
+    ui.horizontalLayout->addWidget(chartView);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setVisible(true);
-
-    setCentralWidget(chartView);
-    gen.~Generator();
+}
+void MainWindow::ClickedSlot() {
+    qDebug("click");
 }
 
 MainWindow::~MainWindow()

@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <QtWidgets/QApplication>
 #include <math.h>
+#include "Generator.h"
 
 
 using namespace std;
